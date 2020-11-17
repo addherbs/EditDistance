@@ -33,3 +33,37 @@ class Solution:
                     heappush(heap, val)
                     
         return heappop(heap)
+
+class Solution:
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        def partition(left, right, pivot_index):
+            pivot = nums[pivot_index]
+            nums[pivot_index], nums[right] = nums[right], nums[pivot_index]
+            start_index = left
+            
+            for i in range(left, right):
+                if pivot > nums[i]:
+                    nums[i], nums[start_index] = nums[start_index], nums[i]
+                    start_index += 1
+            
+            nums[right], nums[start_index] = nums[start_index], nums[right]
+            return start_index
+        
+        def selection_algorithm(left, right, k_smallest):
+            if left == right:
+                return nums[left]
+            
+            pivot_index = partition(left, right, k_smallest)
+            if pivot_index == k_smallest:
+                return nums[pivot_index]
+            if k_smallest < pivot_index:
+                return selection_algorithm(left, pivot_index - 1, k_smallest)
+            else:
+                return selection_algorithm(pivot_index + 1, right, k_smallest)
+        
+        return selection_algorithm(0, len(nums) - 1, len(nums) - k)
