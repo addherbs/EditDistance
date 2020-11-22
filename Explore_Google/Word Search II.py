@@ -69,6 +69,11 @@ class Solution:
             x, y = i + each[0], j + each[1]
             if 0 <= x < len(grid) and 0 <= y < len(grid[0]) and grid[x][y] != "end" and grid[x][y] in trie:
                 self.backtrack(trie[grid[x][y]], grid, x, y, result)
+                #### Optimization Lines ###
+                if not trie[grid[x][y]]:
+                    trie.pop(grid[x][y])
+                #### Optimization Lines ###
+
 
         grid[i][j] = val
 
@@ -91,3 +96,4 @@ class Solution:
         return trie
         
         
+
