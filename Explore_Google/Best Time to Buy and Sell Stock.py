@@ -21,6 +21,7 @@ Output: 0
 Explanation: In this case, no transaction is done, i.e. max profit = 0.
 """
 
+# O(N) Space complexity
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         if not prices: return 0
@@ -35,4 +36,17 @@ class Solution:
             right_max = max(prices[i], right_max)
             ans = max(ans, right_max - temp[i])
         
+        return ans
+        
+        
+# O(1) Space complexity
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        if not prices: return 0
+        left_min = float('inf')
+        ans = 0
+        
+        for i in range(len(prices)):
+            left_min = min(left_min, prices[i])
+            ans = max(ans, prices[i] - left_min)
         return ans
