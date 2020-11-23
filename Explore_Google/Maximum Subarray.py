@@ -38,7 +38,7 @@ Constraints:
 """
 
 
-# Space Complexity 0(N)
+# Space Complexity O(N)
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         if not nums: return 0
@@ -54,3 +54,19 @@ class Solution:
             ans = max(ans, temp[i])
 
         return ans
+        
+        
+# Space Complexity O(1)
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        if not nums: return 0
+        ans = current_sum = nums[0]
+
+        
+        for i in range(1, len(nums)):
+            current_sum = max(nums[i], nums[i] + current_sum)
+            ans = max(ans, current_sum)
+
+        return ans
+
+
