@@ -46,3 +46,37 @@ class Solution:
             ans += max(left[i], right[i])
         
         return ans
+
+
+# O(N) time and O(1) space
+class Solution:
+    def candy(self, ratings: List[int]) -> int:
+        if not ratings: return 0
+        n = len(ratings)
+        ans = 1
+        up = down = peak = 0
+        
+        for i in range(1, n):
+            # If Ascending
+            if ratings[i] > ratings[i-1]:
+                up += 1
+                peak = up
+                down = 0
+                ans += 1 + up
+                
+            # If Descending
+            elif ratings[i] < ratings[i-1]:
+                down += 1
+                up = 0
+                ans += 1 + down
+                
+                # If peak is larger or equal to down, We can reduce 1 from answer that we added with down
+                if peak >= down:
+                    ans -= 1
+
+            # If Equal
+            else:
+                up = down = peak = 0
+                ans += 1
+        
+        return ans
