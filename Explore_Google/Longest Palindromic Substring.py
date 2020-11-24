@@ -57,3 +57,35 @@ class Solution:
                     ans = [i+1, s[j:j+i+1]]
         
         return ans[1]
+        
+        
+        
+# Expand Around Center approach O(N**2) time approach and O(N**2) space
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if not s: return s
+        
+        n = len(s)
+        ans = [1, s[0]]
+        
+        for i in range(n):
+            odd = self.expandAroundCenter(s, n, i, i)
+            even = self.expandAroundCenter(s, n, i, i + 1)
+            max_val = max(even, odd)
+            if ans[0] < max_val:
+                ans = [max_val, s[i-(max_val-1)//2:i+max_val//2 + 1]]
+                
+        return ans[1]
+    
+    
+    def expandAroundCenter(self, s, n, left, right):
+        ans = 0
+        
+        while left > -1 and right < n:
+            if s[left] == s[right]:
+                ans = right - left + 1
+                left -= 1
+                right += 1
+            else: break
+                
+        return ans
