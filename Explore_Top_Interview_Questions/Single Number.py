@@ -39,3 +39,14 @@ class Solution:
             ans ^= val
         
         return ans
+        
+        
+        
+# Using Counter approach
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+
+        from collections import Counter
+        nums = Counter(nums)
+
+        return [key for key, val in nums.items() if val == 1][0]
