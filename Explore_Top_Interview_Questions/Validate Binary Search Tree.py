@@ -74,3 +74,25 @@ class Solution:
             return float('-inf'), float('inf'), False
         
 
+
+# Using Recursion and validating from top to bottom
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        
+        def validate_from_top_to_bottom(node, left, right):
+            if not node: return True
+            val = node.val
+            ans = True
+            
+            if left >= val or val >= right:
+                return False
+        
+            if node.left:
+                ans = validate_from_top_to_bottom(node.left, left, val)
+                
+            if ans and node.right:
+                ans = validate_from_top_to_bottom(node.right, val, right)
+            
+            return ans
+        
+        return validate_from_top_to_bottom(root, float('-inf'), float('inf'))
