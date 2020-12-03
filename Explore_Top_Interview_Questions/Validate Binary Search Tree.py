@@ -96,3 +96,28 @@ class Solution:
             return ans
         
         return validate_from_top_to_bottom(root, float('-inf'), float('inf'))
+
+
+
+# Using Stack and dfs
+class Solution:
+    def isValidBST(self, root: TreeNode) -> bool:
+        
+        if not root: return True
+        
+        stack = [[root, float('-inf'), float('inf')]]
+        
+        while stack:
+            node, left, right = stack.pop()
+            
+            if not(left < node.val < right):
+                return False
+            
+            if node.right:
+                stack.append([node.right, node.val, right])
+            
+            if node.left:
+                stack.append([node.left, left, node.val])
+        
+        
+        return True
