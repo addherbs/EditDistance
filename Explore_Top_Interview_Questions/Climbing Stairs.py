@@ -43,3 +43,12 @@ class Solution:
             a = b
             b = c
         return c
+        
+        
+        
+# Fibonacci formula, O(log(n))
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        sqrt5 = 5 ** (1/2)
+        n = n + 1
+        return int(( ( (1 + sqrt5)/2 ) ** n - ( (1 - sqrt5)/2 ) ** n ) / sqrt5)
