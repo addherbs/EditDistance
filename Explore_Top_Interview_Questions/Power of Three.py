@@ -67,4 +67,8 @@ class Solution:
         
         
         
-        
+# Using Mathematics
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+        # maximum value of n that is also a power of three is 1162261467 and less than 2**31 - 1
+        return n > 0  and 3 ** 19 % n == 0
