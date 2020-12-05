@@ -39,3 +39,15 @@ The input must be a binary string of length 32
 class Solution:
     def hammingWeight(self, n: int) -> int:
         return bin(n).count("1")
+        
+        
+# The key idea here is to realize that for any number n, doing a bit-wise AND of n and n−1 flips the least-significant 1-bit in n to 0.
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        
+        ans = 0
+        while n > 0:
+            ans += 1
+            n = n & (n-1)
+        
+        return ans
