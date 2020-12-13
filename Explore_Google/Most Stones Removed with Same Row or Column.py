@@ -31,7 +31,7 @@ Note:
 """
 
 
-# Solution using DFS
+# Solution using DFS, Time Complexity O(N ** 2)
 class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
         
@@ -65,3 +65,51 @@ class Solution:
                         stack.append((row_index, y))
         
         return len(stones) - count
+        
+        
+        
+# Using Disjoin Set method. Time complexity is O(N * LOG(N))
+class DisjoinSet:
+    def __init__(self, n):
+        self.rank = [1] * n
+        self.parent = [i for i in range(n)]
+
+    
+    def find_path_compression(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find_path_compression(self.parent[x])
+        
+        return self.parent[x]
+    
+    
+    def union(self, x, y):
+        
+        # With union-by-rank method, optimization
+        x_set_rep = self.find_path_compression(x)
+        y_set_rep = self.find_path_compression(y)
+        
+        if x_set_rep == y_set_rep: return
+        
+        if self.rank[x_set_rep] > self.rank[y_set_rep]:
+            self.parent[y_set_rep] = x_set_rep
+        elif self.rank[x_set_rep] < self.rank[y_set_rep]:
+            self.parent[x_set_rep] = y_set_rep
+        else:
+            self.parent[x_set_rep] = y_set_rep
+            self.rank[y_set_rep] += 1
+        
+        # Without Union-by-rank method
+        # xr = self.find_path_compression(x)
+        # yr = self.find_path_compression(y)
+        # self.parent[xr] = yr
+    
+
+class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+
+        dsu = DisjoinSet(20001)
+        
+        for x, y in stones:
+            dsu.union(x, y + 10000)
+        
+        return len(stones) - len({dsu.find_path_compression(x) for x, y in stones})
